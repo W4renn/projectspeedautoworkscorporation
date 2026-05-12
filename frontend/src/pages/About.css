@@ -1,0 +1,658 @@
+.about-page {
+  font-family: 'Montserrat', 'Roboto', sans-serif;
+  color: #0243a1;
+  padding: 40px 20px;
+  margin: 0 auto;
+  background-color: #ffffff;
+}
+
+/* Header Section */
+.about-header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 50px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.about-header .about-image img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  display: block;
+}
+
+.about-header .about-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0243a1;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(2, 67, 161, 0.2);
+  padding: 15px;
+}
+
+.about-header .about-text h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #0243a1;
+}
+
+.about-header .about-text p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* 3D Car Image Section */
+.car-3d-section {
+  margin-bottom: 50px;
+}
+
+.car-3d-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(2, 67, 161, 0.2);
+}
+
+.car-3d-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.car-3d-container:hover .car-3d-image {
+  transform: scale(1.05);
+}
+
+.car-3d-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(2, 67, 161, 0.8) 0%, rgba(234, 11, 6, 0.6) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.car-3d-overlay h2 {
+  color: #ff3300;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.car-3d-overlay p {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+
+.vision-mission-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 50px;
+  min-height: 60vh;
+  justify-content: center;
+}
+
+.vision-mission-section .vision,
+.vision-mission-section .mission {
+  flex: none;
+  width: 100%;
+  max-width: 700px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(2, 67, 161, 0.15);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.vision-mission-section .vision:hover,
+.vision-mission-section .mission:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(2, 67, 161, 0.15);
+}
+
+.vision-mission-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ff3300;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.vision-mission-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+
+.team-section {
+  margin-bottom: 30px;
+}
+
+.team-section h2 {
+  text-align: center;
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+  color: #0243a1;
+  letter-spacing: 1px;
+}
+
+.team-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.team-content .owner-image {
+  flex: 0 1 300px;
+}
+
+.team-content .owner-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(2, 67, 161, 0.1);
+}
+
+.team-content .owner-story {
+  flex: 0 1 400px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  text-align: left;
+}
+
+
+.technicians-section {
+  flex-wrap: wrap;
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+  padding: 60px 40px;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.technicians-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #0243a1;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  width: 500%;
+}
+
+.technicians-section h2::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #0243a1, #E65100);
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.technicians-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 2rem;
+  max-width: 1400px;
+  padding: 0 2rem;
+}
+
+@media (max-width: 1200px) {
+  .technicians-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .technicians-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .technicians-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+}
+
+.technician-card {
+  text-align: center;
+  width: 100%;
+  max-width: 250px;
+  transition: transform 0.4s ease;
+  margin-left: 25px;
+}
+
+.technician-card:hover {
+  transform: translateY(-10px);
+}
+
+.technician-card img {
+  width: 100%;
+  height: 320px; 
+  border-radius: 4px; 
+  object-fit: cover;
+  box-shadow: 0 8px 30px rgba(2, 67, 161, 0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.technician-card img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 40px rgba(2, 67, 161, 0.25);
+}
+
+.technician-card p {
+  margin-top: 1.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #ff3300;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.technician-card p::before {
+  content: '━';
+  margin-right: 10px;
+  color: #0243a1;
+}
+
+.technician-card p::after {
+  content: '━';
+  margin-left: 10px;
+  color: #0243a1;
+}
+
+.technician-role {
+  color: #0243a1 !important;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+
+@media (max-width: 992px) {
+  .about-header .about-text {
+    width: 90%;
+    font-size: 1rem;
+  }
+
+  .vision-mission-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .vision-mission-section .vision,
+  .vision-mission-section .mission {
+    flex: none;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .team-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .team-content .owner-image,
+  .team-content .owner-story {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .car-3d-image {
+    height: 300px;
+  }
+
+  .car-3d-overlay h2 {
+    font-size: 2rem;
+  }
+
+  .car-3d-overlay p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .technician-card {
+    flex: 0 1 45%;
+  }
+
+  .technician-card img {
+    height: 180px;
+  }
+
+  .technician-card p {
+    font-size: 0.9rem;
+  }
+
+  .car-3d-image {
+    height: 250px;
+  }
+
+  .car-3d-overlay h2 {
+    font-size: 1.5rem;
+  }
+
+  .car-3d-overlay p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .technician-card {
+    flex: 0 1 80%;
+  }
+
+  .technician-card img {
+    height: 150px;
+  }
+
+  .car-3d-image {
+    height: 200px;
+  }
+
+  .car-3d-overlay h2 {
+    font-size: 1.2rem;
+  }
+
+  .car-3d-overlay p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  margin-bottom: 30px;
+  text-align: center;
+  padding: 60px 40px;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.testimonials-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #0243a1;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+}
+
+.testimonials-section h2::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #0243a1, #E65100);
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.testimonials-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.testimonial-card {
+  text-align: center;
+  flex: 0 1 350px;
+  max-width: 400px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(2, 67, 161, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(2, 67, 161, 0.2);
+}
+
+.testimonial-text {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #0243a1;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.testimonial-author {
+  line-height: 1.8;
+  color:#ff3300;
+}
+
+.testimonial-rating {
+  line-height: 1.8;
+  color:#ff3300;
+}
+
+.testimonial-date {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+.delete-testimonial-btn {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.delete-testimonial-btn:hover {
+  background: #c82333;
+}
+
+.edit-testimonial-btn {
+  margin-left: 70px;
+  margin-top: 15px;
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.edit-testimonial-btn:hover {
+  background: #0056b3;
+}
+
+.cancel-btn {
+  margin-top: 8px;
+  padding: 14px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  flex: 1;
+}
+
+.cancel-btn:hover {
+  background: #545b62;
+}
+
+/* Add Testimonial Form */
+.add-testimonial-form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(2, 67, 161, 0.15);
+  border: 1px solid #e0e0e0;
+}
+
+.add-testimonial-form .error-message {
+  color: #dc3545;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.add-testimonial-form .success-message {
+  color: #155724;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.add-testimonial-form .form-group {
+  margin-bottom: 20px;
+}
+
+.add-testimonial-form label {
+  display: block;
+  font-weight: 600;
+  color: #0243a1;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.add-testimonial-form textarea,
+.add-testimonial-form input,
+.add-testimonial-form select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.add-testimonial-form textarea:focus,
+.add-testimonial-form input:focus,
+.add-testimonial-form select:focus {
+  outline: none;
+  border-color: #0243a1;
+  box-shadow: 0 0 0 3px rgba(2, 67, 161, 0.1);
+}
+
+.add-testimonial-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.add-testimonial-form .submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #0243a1 0%, #E65100 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex: 1;
+}
+
+.add-testimonial-form .submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(2, 67, 161, 0.3);
+}
+
+.add-testimonial-form .submit-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.add-testimonial-btn {
+  display: block;
+  margin: 30px auto;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #0243a1 0%, #E65100 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-testimonial-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(2, 67, 161, 0.3);
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  .add-testimonial-form {
+    margin: 20px 20px;
+    padding: 20px;
+  }
+}
