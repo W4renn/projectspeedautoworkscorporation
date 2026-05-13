@@ -5,6 +5,7 @@ import type { Service } from "../api/services";
 import cityBg from '../images/psac-1.png';
 import axios from "axios";
 
+const BASE_IMAGE_URL = 'https://projectspeedautoworkscorporation-backend.onrender.com';
 const API = import.meta.env.VITE_API_URL;
 
 const Services: React.FC = () => {
@@ -52,11 +53,15 @@ const Services: React.FC = () => {
       <main className="services-list">
         {services.map((service, index) => (
           <div className="service-item" key={service._id || index}>
-            <img
-              src={service.imgURL?.startsWith("/") ? service.imgURL : `/${service.imgURL}`}
-              alt={service.title}
-              className="service-image"
-            />
+            <img 
+                          src={`${BASE_IMAGE_URL}/${service.imgURL || ''}`} 
+                          alt={service.title} 
+                          className="product-thumb"
+                          onError={(e) => {
+                            e.currentTarget.src = '/vite.svg'; // fallback
+                            e.currentTarget.alt = 'Image not available';
+                          }}
+                        />
             <div className="service-info">
               <h2 className="service-title">{service.title}</h2>
               <p className="service-desc">{service.description}</p>
