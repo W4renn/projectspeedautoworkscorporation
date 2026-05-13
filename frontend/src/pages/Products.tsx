@@ -20,6 +20,7 @@ const categories = [
   "Coolants",
 ];
 
+const BASE_IMAGE_URL = 'https://projectspeedautoworkscorporation-backend.onrender.com';
 const API = import.meta.env.VITE_API_URL;
 
 const Products: React.FC = () => {
@@ -100,7 +101,15 @@ const Products: React.FC = () => {
           <div className="container">
             {filteredProducts.map((product, index) => (
               <div className="card" key={product._id || index}>
-                <img src={product.imgURL} alt={product.title} />
+                <img 
+                          src={`${BASE_IMAGE_URL}/${product.imgURL || ''}`} 
+                          alt={product.title} 
+                          className="product-thumb"
+                          onError={(e) => {
+                            e.currentTarget.src = '/vite.svg'; // fallback
+                            e.currentTarget.alt = 'Image not available';
+                          }}
+                        />
                 <h2>{product.title}</h2>
                 <p>{product.description}</p>
               </div>
