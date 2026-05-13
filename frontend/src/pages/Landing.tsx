@@ -248,7 +248,7 @@ const Landing: React.FC = () => {
               <img 
                           src={`${BASE_IMAGE_URL}/${service.imgURL || ''}`} 
                           alt={service.title} 
-                          className="product-thumb"
+                          className="service-image"
                           onError={(e) => {
                             e.currentTarget.src = '/vite.svg'; // fallback
                             e.currentTarget.alt = 'Image not available';
