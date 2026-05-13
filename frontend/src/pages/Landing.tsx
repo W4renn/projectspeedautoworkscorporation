@@ -31,6 +31,8 @@ interface Announcement {
   createdAt: string;
 }
 
+
+const BASE_IMAGE_URL = 'https://projectspeedautoworkscorporation-backend.onrender.com';
 const API = import.meta.env.VITE_API_URL;
 
 const Landing: React.FC = () => {
@@ -243,10 +245,15 @@ const Landing: React.FC = () => {
         <div className="boxes-section">
           {services.slice(0, 8).map((service, index) => (
             <div key={service._id || index} className="box">
-              <img
-                src={service.imgURL?.startsWith("/") ? service.imgURL : `/${service.imgURL}`}
-                alt={service.title}
-              />
+              <img 
+                          src={`${BASE_IMAGE_URL}/${service.imgURL || ''}`} 
+                          alt={service.title} 
+                          className="product-thumb"
+                          onError={(e) => {
+                            e.currentTarget.src = '/vite.svg'; // fallback
+                            e.currentTarget.alt = 'Image not available';
+                          }}
+                        />
               <h3>{service.title}</h3>
               <p>{service.description}</p>
             </div>
