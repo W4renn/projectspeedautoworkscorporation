@@ -190,20 +190,24 @@ export default function AdminDashboard() {
   };
 
   const fetchTestimonials = async () => {
-    try {
-      const res = await axios.get(`${API}/testimonials`);
-      const data = res.data.map((item: any) => ({
-        id: item._id || item.id,
-        text: item.testimonialText || "",
-        author: item.customerName || "",
-        rating: "★".repeat(item.rating || 5),
-        date: item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : "",
-      }));
-      setTestimonials(data);
-    } catch (err) {
-      console.error("Failed to load testimonials:", err);
-    }
-  };
+  try {
+    const res = await axios.get(`${API}/testimonials`);
+
+    const data = res.data.map((item: any) => ({
+      id: item._id || item.id,
+      text: item.testimonialText || "",
+      author: item.customerName || "",
+      rating: "★".repeat(item.rating || 5),
+      date: item.createdAt
+        ? new Date(item.createdAt).toLocaleDateString()
+        : "",
+    }));
+
+    setTestimonials(data);
+  } catch (err) {
+    console.error("Failed to load testimonials:", err);
+  }
+};
 
   const handleSaveAnnouncement = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -266,7 +270,7 @@ export default function AdminDashboard() {
     if (!window.confirm('Delete this announcement?')) return;
     try {
       setAnnouncementError(null);
-      await axios.delete(`/api/announcements/${id}`);
+      await axios.delete(`${API}/announcements/${id}`);
       fetchAnnouncements();
     } catch (err: any) {
       console.error("Error deleting announcement:", err);
@@ -276,7 +280,7 @@ export default function AdminDashboard() {
 
   const handleApprove = async (id: string | number) => {
     try {
-      await axios.put(`/api/appointments/${id}/status`, { status: "approved" });
+      await axios.put(`${API}/appointments/${id}/status`, { status: "approved" });
       fetchAllData();
     } catch (err: any) {
       console.error("Error approving appointment:", err);
@@ -286,7 +290,7 @@ export default function AdminDashboard() {
 
   const handleReject = async (id: string | number) => {
     try {
-      await axios.put(`/api/appointments/${id}/status`, { status: "rejected" });
+      await axios.put(`${API}/appointments/${id}/status`, { status: "rejected" });
       fetchAllData();
     } catch (err: any) {
       console.error("Error rejecting appointment:", err);
@@ -316,7 +320,7 @@ export default function AdminDashboard() {
 
       let res;
       if (testimonialEditingId) {
-        res = await axios.put(`/api/testimonials/${testimonialEditingId}`, payload);
+        res = await axios.put(`${API}/testimonials/${testimonialEditingId}`, payload);
         const updatedTestimonial: Testimonial = {
           id: res.data.testimonial._id || testimonialEditingId,
           text: formData.text,
@@ -326,7 +330,7 @@ export default function AdminDashboard() {
         };
         setTestimonials(testimonials.map(t => t.id === testimonialEditingId ? updatedTestimonial : t));
       } else {
-        res = await axios.post("/api/testimonials", payload);
+        res = await axios.post(`${API}/testimonials`, payload);
         const newTestimonial: Testimonial = {
           id: res.data.testimonial._id || "",
           text: formData.text,
@@ -352,7 +356,7 @@ export default function AdminDashboard() {
   const deleteTestimonial = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this testimonial?")) return;
     try {
-      await axios.delete(`/api/testimonials/${id}`);
+      await axios.delete(`${API}/testimonials/${id}`);
       setTestimonials(testimonials.filter(t => t.id !== id));
     } catch (err) {
       console.error("Failed to delete testimonial:", err);
