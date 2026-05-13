@@ -223,13 +223,13 @@ export default function AdminDashboard() {
       }
       
       if (editingAnnouncementId) {
-        await axios.put(`/api/announcements/${editingAnnouncementId}`, formData, {
+        await axios.put(`${API}/announcements/${editingAnnouncementId}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
       } else {
-        await axios.post("/api/announcements", formData, {
+        await axios.post(`${API}/announcements`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
