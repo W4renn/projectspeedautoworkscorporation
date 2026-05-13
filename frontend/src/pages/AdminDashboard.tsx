@@ -413,11 +413,11 @@ export default function AdminDashboard() {
       }
 
       if (productEditingId) {
-        await axios.put(`/api/products/${productEditingId}`, formData, {
+        await axios.put(`${API}/products/${productEditingId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       } else {
-        await axios.post("/api/products", formData, {
+        await axios.post(`${API}/products`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       }
@@ -439,7 +439,7 @@ export default function AdminDashboard() {
   const deleteProduct = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`/api/products/${id}`);
+      await axios.delete(`${API}/products/${id}`);
       setProducts(products.filter(p => p._id !== id));
     } catch (err) {
       console.error("Failed to delete product:", err);
@@ -1107,7 +1107,15 @@ export default function AdminDashboard() {
                   {products.map((product) => (
                     <tr key={product._id}>
                       <td className="product-image-cell">
-                        <img src={product.imgURL} alt={product.title} className="product-thumb" />
+                       <img 
+                          src={`${BASE_IMAGE_URL}/${product.imgURL || ''}`} 
+                          alt={product.title} 
+                          className="product-thumb"
+                          onError={(e) => {
+                            e.currentTarget.src = '/vite.svg'; // fallback
+                            e.currentTarget.alt = 'Image not available';
+                          }}
+                        />
                       </td>
                       <td className="product-title">{product.title}</td>
                       <td>{product.category}</td>
