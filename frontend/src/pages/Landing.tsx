@@ -31,7 +31,6 @@ interface Announcement {
   createdAt: string;
 }
 
-
 const BASE_IMAGE_URL = 'https://projectspeedautoworkscorporation-backend.onrender.com';
 const API = import.meta.env.VITE_API_URL;
 
@@ -45,25 +44,33 @@ const Landing: React.FC = () => {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
-    const fetchAnnouncements = async () => {
-      try {
-        const res = await axios.get(`${API}/announcements`);
-        const data: Announcement[] = res.data;
-        setAnnouncements(data);
-        if (data.length > 0) {
-          const latest = data[0];
-          const dismissed = localStorage.getItem(`announcement_dismissed_${latest.id}`);
-          if (!dismissed) {
-            setLatestAnnouncement(latest);
-            setShowPopup(true);
-          }
+  const fetchAnnouncements = async () => {
+    try {
+      const res = await axios.get(`${API}/announcements`);
+      const data: Announcement[] = res.data;
+
+      setAnnouncements(data);
+
+      if (data.length > 0) {
+        const latest = data[0];
+
+        // show only once per browser tab session
+        const alreadyShown = sessionStorage.getItem("announcementShown");
+
+        if (!alreadyShown && !isAdmin) {
+          setLatestAnnouncement(latest);
+          setShowPopup(true);
+
+          sessionStorage.setItem("announcementShown", "true");
         }
-      } catch (err) {
-        console.error("Error fetching announcements:", err);
       }
-    };
-    fetchAnnouncements();
-  }, []);
+    } catch (err) {
+      console.error("Error fetching announcements:", err);
+    }
+  };
+
+  fetchAnnouncements();
+}, []);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -81,10 +88,7 @@ const Landing: React.FC = () => {
   }, []);
 
   const handleClosePopup = () => {
-    setShowPopup(false);
-    if (latestAnnouncement) {
-      localStorage.setItem(`announcement_dismissed_${latestAnnouncement.id}`, "true");
-    }
+  setShowPopup(false);
   };
 
   const settings = {
