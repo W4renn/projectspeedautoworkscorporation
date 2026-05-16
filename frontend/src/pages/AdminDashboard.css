@@ -1,4 +1,50 @@
-/* Pending Appointments Management Styles */
+/* Testimonials Management Styles */
+.testimonials-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.testimonials-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.toggle-testimonials-btn {
+  padding: 8px 14px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-testimonials-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.toggle-testimonials-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .testimonials-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-testimonials-btn {
+    width: 100%;
+  }
+}
+
+/* Appointments Management Styles */
 .appointments-header {
   display: flex;
   justify-content: space-between;
