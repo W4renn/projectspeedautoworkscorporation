@@ -228,6 +228,7 @@ export default function BookAppointment() {
                 <option value="wheel-balancing">Wheel Balancing</option>
                 <option value="suspension">Suspension</option>
                 <option value="egr-cleaning">EGR Cleaning</option>
+                <option value="other">Other</option>
               </select>
             </div>
           </div>
