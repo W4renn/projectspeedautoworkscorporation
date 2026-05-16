@@ -104,7 +104,7 @@ const Products: React.FC = () => {
                 <img 
                           src={`${BASE_IMAGE_URL}/${product.imgURL || ''}`} 
                           alt={product.title} 
-                          className="product-thumb"
+                          className="product-image"
                           onError={(e) => {
                             e.currentTarget.src = '/vite.svg'; // fallback
                             e.currentTarget.alt = 'Image not available';
