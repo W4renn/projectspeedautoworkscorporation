@@ -163,6 +163,12 @@ export default function AdminDashboard() {
   const visibleRejectedAppointments = showAllRejected
     ? rejectedAppointments
     : rejectedAppointments.slice(0, 5);
+
+  const [showAllTestimonials, setShowAllTestimonials] = useState(false);
+
+  const visibleTestimonials = showAllTestimonials
+    ? testimonials
+    : testimonials.slice(0, 5);
   
   const customerNameFallback = (apt: Appointment) => {
     return apt.customerName || `${apt.firstName || ''} ${apt.surname || ''}`.trim() || 'Unknown';
@@ -1132,49 +1138,78 @@ export default function AdminDashboard() {
 
         {/* Testimonials Management Section */}
         <div className="appointments-section">
-          <h3>Manage Testimonials ({testimonials.length})</h3>
-          
-          {testimonials.length === 0 ? (
-            <p className="no-appointments">No testimonials yet</p>
-          ) : (
-            <div className="testimonials-table-container">
-              <table className="testimonials-table">
-                <thead>
-                  <tr>
-                    <th>Text</th>
-                    <th>Author</th>
-                    <th>Rating</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {testimonials.map((testimonial) => (
-                    <tr key={testimonial.id}>
-                      <td className="testimonial-text">{testimonial.text}</td>
-                      <td>{testimonial.author}</td>
-                      <td>{testimonial.rating}</td>
-                      <td>{testimonial.date}</td>
-                      <td className="testimonial-actions">
-                        <button 
-                          className="edit-testimonial-btn small-btn" 
-                          onClick={() => editTestimonial(testimonial)}
-                        >
-                          Edit
-                        </button>
-                        <button 
-                          className="delete-testimonial-btn small-btn" 
-                          onClick={() => deleteTestimonial(testimonial.id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+        <div className="testimonials-header">
+          <h3>
+            Manage Testimonials ({testimonials.length})
+          </h3>
+
+          {testimonials.length > 5 && (
+            <button
+              className="toggle-testimonials-btn"
+              onClick={() =>
+                setShowAllTestimonials(!showAllTestimonials)
+              }
+            >
+              {showAllTestimonials ? "Collapse" : "Show All"}
+            </button>
           )}
+        </div>
+
+        {testimonials.length === 0 ? (
+          <p className="no-appointments">
+            No testimonials yet
+          </p>
+        ) : (
+          <div className="testimonials-table-container">
+            <table className="testimonials-table">
+              <thead>
+                <tr>
+                  <th>Text</th>
+                  <th>Author</th>
+                  <th>Rating</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {visibleTestimonials.map((testimonial) => (
+                  <tr key={testimonial.id}>
+                    <td className="testimonial-text">
+                      {testimonial.text}
+                    </td>
+
+                    <td>{testimonial.author}</td>
+
+                    <td>{testimonial.rating}</td>
+
+                    <td>{testimonial.date}</td>
+
+                    <td className="testimonial-actions">
+                      <button
+                        className="edit-testimonial-btn small-btn"
+                        onClick={() =>
+                          editTestimonial(testimonial)
+                        }
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        className="delete-testimonial-btn small-btn"
+                        onClick={() =>
+                          deleteTestimonial(testimonial.id)
+                        }
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
           <button 
             className="toggle-testimonial-form-btn"
