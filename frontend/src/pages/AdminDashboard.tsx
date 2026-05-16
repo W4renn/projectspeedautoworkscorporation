@@ -948,7 +948,21 @@ export default function AdminDashboard() {
                   <div className="announcement-content">
                     <span className="announcement-badge">{announcement.type}</span>
                     <p className="announcement-message">{announcement.message}</p>
-                    {announcement.image && <img src={announcement.image.replace(/\\/g, '/')} alt="Announcement" className="announcement-image" />}
+                    {announcement.image && (
+                        <img
+                          src={`${BASE_IMAGE_URL}/${String(announcement.image)
+                            .replace(/\\/g, '/')
+                            .replace(/^\/+/, '')}`}
+                          alt="Announcement"
+                          className="announcement-popup-image"
+                          onError={(e) => {
+                            console.log('Failed image:', e.currentTarget.src);
+
+                            e.currentTarget.src = '/vite.svg';
+                            e.currentTarget.alt = 'Image not available';
+                          }}
+                        />
+                      )}
                     <small className="announcement-date">
                       {new Date(announcement.createdAt).toLocaleString()}
                     </small>
