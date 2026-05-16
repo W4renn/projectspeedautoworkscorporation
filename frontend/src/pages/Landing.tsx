@@ -134,7 +134,7 @@ const Landing: React.FC = () => {
             <span className={`announcement-popup-badge ${latestAnnouncement.type}`}>
               {latestAnnouncement.type}
             </span>
-            <h2 className="announcement-popup-title">Announcement</h2>
+            <h2 className="announcement-popup-title">📣Announcement!!</h2>
             <p className="announcement-popup-message">{latestAnnouncement.message}</p>
             {latestAnnouncement.image && (
                 <img
