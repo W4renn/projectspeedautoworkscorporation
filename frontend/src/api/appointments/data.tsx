@@ -26,7 +26,7 @@ export const SERVICE_TYPES = {
   "car-detailing": "Car Detailing",
   "air-conditioner": "Air Conditioner Service",
   "general-maintenance": "General Maintenance",
-  other: "Other",
+  "other": "Other",
 } as const;
 
 export const APPOINTMENT_STATUSES: Record<AppointmentStatus, string> = {
