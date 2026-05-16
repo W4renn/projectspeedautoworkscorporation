@@ -135,6 +135,7 @@ export default function AdminDashboard() {
 
   const [showAllProducts, setShowAllProducts] = useState(false);
 
+  // Collapasible
   const visibleProducts = showAllProducts
     ? products
     : products.slice(0, 5);
@@ -144,6 +145,24 @@ export default function AdminDashboard() {
   const visibleServices = showAllServices
     ? services
     : services.slice(0, 5);
+
+  const [showAllPending, setShowAllPending] = useState(false);
+
+  const visiblePendingAppointments = showAllPending
+    ? pendingAppointments
+    : pendingAppointments.slice(0, 5);
+
+  const [showAllApproved, setShowAllApproved] = useState(false);
+
+  const visibleApprovedAppointments = showAllApproved
+    ? approvedAppointments
+    : approvedAppointments.slice(0, 5);
+
+  const [showAllRejected, setShowAllRejected] = useState(false);
+
+  const visibleRejectedAppointments = showAllRejected
+    ? rejectedAppointments
+    : rejectedAppointments.slice(0, 5);
   
   const customerNameFallback = (apt: Appointment) => {
     return apt.customerName || `${apt.firstName || ''} ${apt.surname || ''}`.trim() || 'Unknown';
@@ -706,40 +725,74 @@ export default function AdminDashboard() {
 
         {/* Pending Appointments Section */}
         <div className="appointments-section">
-          <h3>New Booking Requests ({pendingAppointments.length})</h3>
-          {pendingAppointments.length === 0 ? (
-            <p className="no-appointments">No pending bookings</p>
-          ) : (
-            <div className="appointments-grid">
-              {pendingAppointments.map((apt) => (
-                <div key={apt.id} className="appointment-card pending">
-                  <div className="appointment-info">
-                    <h4>{customerNameFallback(apt)}</h4>
-                    <p><strong>Car:</strong> {apt.carModel}</p>
-                    <p><strong>Service:</strong> {apt.serviceType}</p>
-                    <p><strong>Date:</strong> {apt.bookingDate} at {apt.bookingTime}</p>
-                    <p><strong>Contact:</strong> {apt.contactNumber}</p>
-                    {apt.description && <p><strong>Notes:</strong> {apt.description}</p>}
-                  </div>
-                  <div className="appointment-actions">
-                    <button 
-                      className="approve-btn" 
-                      onClick={() => handleApprove(apt.id)}
-                    >
-                      Approve
-                    </button>
-                    <button 
-                      className="reject-btn" 
-                      onClick={() => handleReject(apt.id)}
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="appointments-header">
+          <h3>
+            New Booking Requests ({pendingAppointments.length})
+          </h3>
+
+          {pendingAppointments.length > 5 && (
+            <button
+              className="toggle-appointments-btn"
+              onClick={() => setShowAllPending(!showAllPending)}
+            >
+              {showAllPending ? "Collapse" : "Show All"}
+            </button>
           )}
         </div>
+
+        {pendingAppointments.length === 0 ? (
+          <p className="no-appointments">No pending bookings</p>
+        ) : (
+          <div className="appointments-grid">
+            {visiblePendingAppointments.map((apt) => (
+              <div key={apt.id} className="appointment-card pending">
+                <div className="appointment-info">
+                  <h4>{customerNameFallback(apt)}</h4>
+
+                  <p>
+                    <strong>Car:</strong> {apt.carModel}
+                  </p>
+
+                  <p>
+                    <strong>Service:</strong> {apt.serviceType}
+                  </p>
+
+                  <p>
+                    <strong>Date:</strong> {apt.bookingDate} at{" "}
+                    {apt.bookingTime}
+                  </p>
+
+                  <p>
+                    <strong>Contact:</strong> {apt.contactNumber}
+                  </p>
+
+                  {apt.description && (
+                    <p>
+                      <strong>Notes:</strong> {apt.description}
+                    </p>
+                  )}
+                </div>
+
+                <div className="appointment-actions">
+                  <button
+                    className="approve-btn"
+                    onClick={() => handleApprove(apt.id)}
+                  >
+                    Approve
+                  </button>
+
+                  <button
+                    className="reject-btn"
+                    onClick={() => handleReject(apt.id)}
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
         {/* Summary Stats Section */}
         <div className="appointments-section stats-section">
@@ -796,24 +849,65 @@ export default function AdminDashboard() {
 
         {/* Rejected Appointments Section */}
         <div className="appointments-section rejected-section">
-          <h3>Rejected Bookings ({rejectedAppointments.length})</h3>
+          <div className="appointments-header">
+            <h3>
+              Rejected Bookings ({rejectedAppointments.length})
+            </h3>
+
+            {rejectedAppointments.length > 5 && (
+              <button
+                className="toggle-appointments-btn"
+                onClick={() => setShowAllRejected(!showAllRejected)}
+              >
+                {showAllRejected ? "Collapse" : "Show All"}
+              </button>
+            )}
+          </div>
+
           {rejectedAppointments.length === 0 ? (
             <p className="no-appointments">No rejected bookings</p>
           ) : (
             <div className="appointments-grid">
-              {rejectedAppointments.map((apt) => (
+              {visibleRejectedAppointments.map((apt) => (
                 <div key={apt.id} className="appointment-card rejected">
                   <div className="appointment-info">
                     <h4>{customerNameFallback(apt)}</h4>
-                    <p><strong>Car:</strong> {apt.carModel}</p>
-                    <p><strong>Service:</strong> {apt.serviceType}</p>
-                    <p><strong>Date:</strong> {apt.bookingDate} at {apt.bookingTime}</p>
-                    <p><strong>Contact:</strong> {apt.contactNumber}</p>
-                    {apt.description && <p><strong>Notes:</strong> {apt.description}</p>}
-                    {apt.formattedUpdatedAt && <p><strong>Last Updated:</strong> {apt.formattedUpdatedAt}</p>}
+
+                    <p>
+                      <strong>Car:</strong> {apt.carModel}
+                    </p>
+
+                    <p>
+                      <strong>Service:</strong> {apt.serviceType}
+                    </p>
+
+                    <p>
+                      <strong>Date:</strong> {apt.bookingDate} at{" "}
+                      {apt.bookingTime}
+                    </p>
+
+                    <p>
+                      <strong>Contact:</strong> {apt.contactNumber}
+                    </p>
+
+                    {apt.description && (
+                      <p>
+                        <strong>Notes:</strong> {apt.description}
+                      </p>
+                    )}
+
+                    {apt.formattedUpdatedAt && (
+                      <p>
+                        <strong>Last Updated:</strong>{" "}
+                        {apt.formattedUpdatedAt}
+                      </p>
+                    )}
                   </div>
+
                   <div className="appointment-status">
-                    <span className="status-rejected">Rejected</span>
+                    <span className="status-rejected">
+                      Rejected
+                    </span>
                   </div>
                 </div>
               ))}
@@ -823,30 +917,67 @@ export default function AdminDashboard() {
 
         {/* Approved Appointments Section */}
         <div className="appointments-section approved-section">
-          <h3>Approved Bookings ({approvedAppointments.length})</h3>
-          {approvedAppointments.length === 0 ? (
-            <p className="no-appointments">No approved bookings yet</p>
-          ) : (
-            <div className="appointments-grid">
-              {approvedAppointments.map((apt) => (
-                <div key={apt.id} className="appointment-card approved">
-                  <div className="appointment-info">
-                    <h4>{customerNameFallback(apt)}</h4>
-                    <p><strong>Car:</strong> {apt.carModel}</p>
-                    <p><strong>Service:</strong> {apt.serviceType}</p>
-                    <p><strong>Date:</strong> {apt.bookingDate} at {apt.bookingTime}</p>
-                    <p><strong>Contact:</strong> {apt.contactNumber}</p>
-                    {apt.formattedUpdatedAt && <p><strong>Confirmed:</strong> {apt.formattedUpdatedAt}</p>}
-                  </div>
-                  <div className="appointment-status">
-                    <span className="status-approved">Approved</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="appointments-header">
+          <h3>
+            Approved Bookings ({approvedAppointments.length})
+          </h3>
+
+          {approvedAppointments.length > 5 && (
+            <button
+              className="toggle-appointments-btn"
+              onClick={() => setShowAllApproved(!showAllApproved)}
+            >
+              {showAllApproved ? "Collapse" : "Show All"}
+            </button>
           )}
         </div>
 
+        {approvedAppointments.length === 0 ? (
+          <p className="no-appointments">
+            No approved bookings yet
+          </p>
+        ) : (
+          <div className="appointments-grid">
+            {visibleApprovedAppointments.map((apt) => (
+              <div key={apt.id} className="appointment-card approved">
+                <div className="appointment-info">
+                  <h4>{customerNameFallback(apt)}</h4>
+
+                  <p>
+                    <strong>Car:</strong> {apt.carModel}
+                  </p>
+
+                  <p>
+                    <strong>Service:</strong> {apt.serviceType}
+                  </p>
+
+                  <p>
+                    <strong>Date:</strong> {apt.bookingDate} at{" "}
+                    {apt.bookingTime}
+                  </p>
+
+                  <p>
+                    <strong>Contact:</strong> {apt.contactNumber}
+                  </p>
+
+                  {apt.formattedUpdatedAt && (
+                    <p>
+                      <strong>Confirmed:</strong>{" "}
+                      {apt.formattedUpdatedAt}
+                    </p>
+                  )}
+                </div>
+
+                <div className="appointment-status">
+                  <span className="status-approved">
+                    Approved
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
         {/* History Section */}
         <div className="appointments-section history-section">
           <h3>Bookings History ({historyAppointments.length})</h3>
