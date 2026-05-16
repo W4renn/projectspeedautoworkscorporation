@@ -132,6 +132,18 @@ export default function AdminDashboard() {
     "Engine Flushing",
     "Coolants",
   ];
+
+  const [showAllProducts, setShowAllProducts] = useState(false);
+
+  const visibleProducts = showAllProducts
+    ? products
+    : products.slice(0, 5);
+
+  const [showAllServices, setShowAllServices] = useState(false);
+
+  const visibleServices = showAllServices
+    ? services
+    : services.slice(0, 5);
   
   const customerNameFallback = (apt: Appointment) => {
     return apt.customerName || `${apt.firstName || ''} ${apt.surname || ''}`.trim() || 'Unknown';
@@ -1105,59 +1117,78 @@ export default function AdminDashboard() {
 
         {/* Products Management Section */}
         <div className="appointments-section">
-          <h3>Manage Products ({products.length})</h3>
-          
-          {products.length === 0 ? (
-            <p className="no-appointments">No products yet</p>
-          ) : (
-            <div className="products-table-container">
-              <table className="products-table">
-                <thead>
-                  <tr>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product) => (
-                    <tr key={product._id}>
-                      <td className="product-image-cell">
-                       <img 
-                          src={`${BASE_IMAGE_URL}/${product.imgURL || ''}`} 
-                          alt={product.title} 
-                          className="product-thumb"
-                          onError={(e) => {
-                            e.currentTarget.src = '/vite.svg'; // fallback
-                            e.currentTarget.alt = 'Image not available';
-                          }}
-                        />
-                      </td>
-                      <td className="product-title">{product.title}</td>
-                      <td>{product.category}</td>
-                      <td className="product-description">{product.description}</td>
-                      <td className="product-actions">
-                        <button 
-                          className="edit-product-btn small-btn" 
-                          onClick={() => editProduct(product)}
-                        >
-                          Edit
-                        </button>
-                        <button 
-                          className="delete-product-btn small-btn" 
-                          onClick={() => deleteProduct(product._id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="products-header">
+              <h3>Manage Products ({products.length})</h3>
+
+              {products.length > 5 && (
+                <button
+                  className="toggle-products-btn"
+                  onClick={() => setShowAllProducts(!showAllProducts)}
+                >
+                  {showAllProducts ? "Collapse" : "Show All"}
+                </button>
+              )}
             </div>
-          )}
+
+            {products.length === 0 ? (
+              <p className="no-appointments">No products yet</p>
+            ) : (
+              <div className="products-table-container">
+                <table className="products-table">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {visibleProducts.map((product) => (
+                      <tr key={product._id}>
+                        <td className="product-image-cell">
+                          <img
+                            src={`${BASE_IMAGE_URL}/${product.imgURL || ""}`}
+                            alt={product.title}
+                            className="product-thumb"
+                            onError={(e) => {
+                              e.currentTarget.src = "/vite.svg";
+                              e.currentTarget.alt = "Image not available";
+                            }}
+                          />
+                        </td>
+
+                        <td className="product-title">{product.title}</td>
+
+                        <td>{product.category}</td>
+
+                        <td className="product-description">
+                          {product.description}
+                        </td>
+
+                        <td className="product-actions">
+                          <button
+                            className="edit-product-btn small-btn"
+                            onClick={() => editProduct(product)}
+                          >
+                            Edit
+                          </button>
+
+                          <button
+                            className="delete-product-btn small-btn"
+                            onClick={() => deleteProduct(product._id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
           <button 
             className="toggle-product-form-btn"
@@ -1254,57 +1285,75 @@ export default function AdminDashboard() {
 
         {/* Services Management Section */}
         <div className="appointments-section">
+        <div className="services-header">
           <h3>Manage Services ({services.length})</h3>
-          
-          {services.length === 0 ? (
-            <p className="no-appointments">No services yet</p>
-          ) : (
-            <div className="services-table-container">
-              <table className="services-table">
-                <thead>
-                  <tr>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {services.map((service) => (
-                    <tr key={service._id}>
-                      <td className="service-image-cell">
-                        <img 
-                          src={`${BASE_IMAGE_URL}/${service.imgURL || ''}`} 
-                          alt={service.title} 
-                          className="service-thumb"
-                          onError={(e) => {
-                            e.currentTarget.src = '/vite.svg'; // fallback
-                            e.currentTarget.alt = 'Image not available';
-                          }}
-                        />
-                      </td>
-                      <td className="service-title">{service.title}</td>
-                      <td className="service-description">{service.description}</td>
-                      <td className="service-actions">
-                        <button 
-                          className="edit-service-btn small-btn" 
-                          onClick={() => handleEditService(service)}
-                        >
-                          Edit
-                        </button>
-                        <button 
-                          className="delete-service-btn small-btn" 
-                          onClick={() => handleDeleteService(service._id!)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+
+          {services.length > 5 && (
+            <button
+              className="toggle-services-btn"
+              onClick={() => setShowAllServices(!showAllServices)}
+            >
+              {showAllServices ? "Collapse" : "Show All"}
+            </button>
           )}
+        </div>
+
+        {services.length === 0 ? (
+          <p className="no-appointments">No services yet</p>
+        ) : (
+          <div className="services-table-container">
+            <table className="services-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {visibleServices.map((service) => (
+                  <tr key={service._id}>
+                    <td className="service-image-cell">
+                      <img
+                        src={`${BASE_IMAGE_URL}/${service.imgURL || ""}`}
+                        alt={service.title}
+                        className="service-thumb"
+                        onError={(e) => {
+                          e.currentTarget.src = "/vite.svg";
+                          e.currentTarget.alt = "Image not available";
+                        }}
+                      />
+                    </td>
+
+                    <td className="service-title">{service.title}</td>
+
+                    <td className="service-description">
+                      {service.description}
+                    </td>
+
+                    <td className="service-actions">
+                      <button
+                        className="edit-service-btn small-btn"
+                        onClick={() => handleEditService(service)}
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        className="delete-service-btn small-btn"
+                        onClick={() => handleDeleteService(service._id!)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
           <button 
             className="toggle-service-form-btn"
