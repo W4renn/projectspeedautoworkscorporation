@@ -96,7 +96,8 @@ export const CAR_BRANDS = [
   "BMW",
   "Mercedes-Benz",
   "Volkswagen",
-  "Audi"
+  "Audi",
+  "Other"
 ] as const;
 
 export const CAR_MODELS: Record<string, string[]> = {
@@ -115,6 +116,7 @@ export const CAR_MODELS: Record<string, string[]> = {
   "Mercedes-Benz": ["C-Class", "E-Class", "GLC", "GLA"],
   "Volkswagen": ["T-Cross", "Tiguan", "Teramont"],
   "Audi": ["A4", "A6", "Q5", "Q7"],
+  "Other": ["Other"],
 };
 
 export const formatAppointmentDate = (date: string): string => {
