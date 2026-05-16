@@ -173,3 +173,23 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 3px 8px rgba(234, 11, 6, 0.3);
 }
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    padding: 0.75rem;
+  }
+
+  .product-image {
+    height: 200px;
+  }
+
+  .card h2 {
+    font-size: 1rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
+}
