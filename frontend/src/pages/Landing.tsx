@@ -137,20 +137,20 @@ const Landing: React.FC = () => {
             <h2 className="announcement-popup-title">Announcement</h2>
             <p className="announcement-popup-message">{latestAnnouncement.message}</p>
             {latestAnnouncement.image && (
-              <img
-                src={(() => {
-                  const raw = latestAnnouncement.image ?? '';
-                  const normalized = String(raw).replace(/\\/g, '/');
-                  if (normalized.startsWith('http://') || normalized.startsWith('https://')) return normalized;
-                  if (normalized.startsWith('/uploads/')) return normalized;
-                  if (normalized.startsWith('uploads/')) return `/${normalized}`;
-                  if (normalized.includes('/uploads/')) return normalized.slice(normalized.indexOf('/uploads/'));
-                  return `/uploads/${normalized.split('/').pop()}`;
-                })()}
-                alt="Announcement"
-                className="announcement-popup-image"
-              />
-            )}
+                <img
+                          src={`${BASE_IMAGE_URL}/${String(latestAnnouncement.image)
+                            .replace(/\\/g, '/')
+                            .replace(/^\/+/, '')}`}
+                          alt="Announcement"
+                          className="announcement-popup-image"
+                          onError={(e) => {
+                            console.log('Failed image:', e.currentTarget.src);
+
+                            e.currentTarget.src = '/vite.svg';
+                            e.currentTarget.alt = 'Image not available';
+                          }}
+                        />
+              )}
             <small className="announcement-popup-date">
               {new Date(latestAnnouncement.createdAt).toLocaleString()}
             </small>
