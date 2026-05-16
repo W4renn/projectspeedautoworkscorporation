@@ -1,3 +1,50 @@
+/* Pending Appointments Management Styles */
+.appointments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.appointments-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.toggle-appointments-btn {
+  padding: 8px 14px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-appointments-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.toggle-appointments-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .appointments-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-appointments-btn {
+    width: 100%;
+  }
+}
+
+/* Services Management Styles */
 .services-header {
   display: flex;
   justify-content: space-between;
@@ -45,7 +92,6 @@
 
 
 /* Products Management Styles */
-
 .products-header {
   display: flex;
   justify-content: space-between;
