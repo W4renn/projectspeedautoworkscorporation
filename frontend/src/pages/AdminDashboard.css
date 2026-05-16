@@ -1,3 +1,97 @@
+.services-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.services-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.toggle-services-btn {
+  padding: 8px 14px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-services-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.toggle-services-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .services-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-services-btn {
+    width: 100%;
+  }
+}
+
+
+/* Products Management Styles */
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.products-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.toggle-products-btn {
+  padding: 8px 14px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-products-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.toggle-products-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .products-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-products-btn {
+    width: 100%;
+  }
+}
+
+/* Admin Dashboard Styles */
 
 .admin-dashboard {
   display: flex;
