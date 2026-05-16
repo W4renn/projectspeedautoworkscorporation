@@ -32,7 +32,7 @@ export default function Signup() {
       <div className="signup-box">
         <div className="signup-header">
           <h1>Sign-Up</h1>
-          <p>Create your account to access dashboard or book appointments</p>
+          <p>Create your account to access the dashboard</p>
         </div>
         <form className="signup-form" onSubmit={handleSubmit}>
           <input
