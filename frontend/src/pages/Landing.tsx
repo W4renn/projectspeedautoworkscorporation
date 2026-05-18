@@ -264,7 +264,7 @@ const Landing: React.FC = () => {
           ))}
         </div>
         {loading ? (
-          <div style={{ textAlign: "center", padding: "2rem" }}>Loading services...</div>
+          <div style={{ textAlign: "center", padding: "2rem", width: "95%" }}>Loading services...</div>
         ) : (
           <div className="container">
             {services.length === 0 && (
