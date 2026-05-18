@@ -25,6 +25,7 @@ interface Appointment {
   firstName?: string;
   surname?: string;
   contactNumber: string;
+  email: string;
   carModel: string;
   serviceType: string;
   bookingDate: string;
@@ -133,9 +134,11 @@ export default function AdminDashboard() {
     "Coolants",
   ];
 
+  
+
+  // Collapasible sections state
   const [showAllProducts, setShowAllProducts] = useState(false);
 
-  // Collapasible
   const visibleProducts = showAllProducts
     ? products
     : products.slice(0, 5);
@@ -169,7 +172,7 @@ export default function AdminDashboard() {
   const visibleTestimonials = showAllTestimonials
     ? testimonials
     : testimonials.slice(0, 5);
-  
+
   const customerNameFallback = (apt: Appointment) => {
     return apt.customerName || `${apt.firstName || ''} ${apt.surname || ''}`.trim() || 'Unknown';
   };
@@ -772,6 +775,10 @@ export default function AdminDashboard() {
                     <strong>Contact:</strong> {apt.contactNumber}
                   </p>
 
+                  <p>
+                    <strong>Email:</strong> {apt.email}
+                  </p>
+
                   {apt.description && (
                     <p>
                       <strong>Notes:</strong> {apt.description}
@@ -895,6 +902,10 @@ export default function AdminDashboard() {
                     <p>
                       <strong>Contact:</strong> {apt.contactNumber}
                     </p>
+                    
+                    <p>
+                      <strong>Email:</strong> {apt.email}
+                    </p>
 
                     {apt.description && (
                       <p>
@@ -964,6 +975,10 @@ export default function AdminDashboard() {
 
                   <p>
                     <strong>Contact:</strong> {apt.contactNumber}
+                  </p>
+
+                  <p>
+                    <strong>Email:</strong> {apt.email}
                   </p>
 
                   {apt.formattedUpdatedAt && (
