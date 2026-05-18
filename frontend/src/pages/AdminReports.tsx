@@ -52,7 +52,12 @@ interface DailyTrendData {
   bookings: number;
 }
 
-const STATUS_COLORS = ["#555555", "#28a745", "#dc3545"];
+const STATUS_COLOR_MAP: Record<string, string> = {
+  Pending: "#555555",
+  Approved: "#28a745",
+  Rejected: "#dc3545",
+};
+
 const SERVICE_COLORS = ["#0243a1", "#E65100", "#28a745", "#dc3545", "#ffc107", "#6f42c1", "#17a2b8", "#fd7e14"];
 
 const API = import.meta.env.VITE_API_URL;
@@ -87,13 +92,26 @@ export default function AdminReports() {
       if (statusFilter !== "all") params.status = statusFilter;
       if (serviceTypeFilter !== "all") params.serviceType = serviceTypeFilter;
 
+      const chartParams: any = {
+        startDate,
+        endDate,
+      };
+
+      if (statusFilter !== "all") {
+        chartParams.status = statusFilter;
+      }
+
+      if (serviceTypeFilter !== "all") {
+        chartParams.serviceType = serviceTypeFilter;
+      }
+
       const [appointmentsRes, summaryRes, serviceTypesRes, trendsRes] = await Promise.all([
         axios.get(`${API}/reports/appointments`, { params }),
         axios.get(`${API}/reports/summary`, { params }),
-        axios.get(`${API}/reports/service-types`, { params: { startDate, endDate, status: statusFilter } }),
-        axios.get(`${API}/reports/daily-trends`, { params: { startDate, endDate, status: statusFilter } }),
+        axios.get(`${API}/reports/service-types`, { params: chartParams }),
+        axios.get(`${API}/reports/daily-trends`, { params: chartParams }),
       ]);
-
+      
       setAppointments(appointmentsRes.data || []);
       setStats(summaryRes.data || { total: 0, pending: 0, approved: 0, rejected: 0 });
       setServiceTypeData(serviceTypesRes.data || []);
@@ -206,15 +224,17 @@ export default function AdminReports() {
                   <option value="rejected">Rejected</option>
                 </select>
               </div>
-              <div className="filter-group">
+              {/* <div className="filter-group">
                 <label>Service Type:</label>
                 <select value={serviceTypeFilter} onChange={(e) => setServiceTypeFilter(e.target.value)}>
                   <option value="all">All Services</option>
                   {serviceTypes.map((type) => (
-                    <option key={type} value={type}>{type}</option>
+                    <option key={type} value={type.toLowerCase()}>
+                      {type}
+                    </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
               <div className="filter-actions">
                 <button type="submit" className="apply-filter-btn" disabled={loading}>
                   {loading ? 'Loading...' : 'Apply Filters'}
@@ -273,8 +293,11 @@ export default function AdminReports() {
                         `${name} ${percent !== undefined ? (percent * 100).toFixed(0) : 0}%`
                       }
                     >
-                      {statusPieData.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={STATUS_COLORS[index % STATUS_COLORS.length]} />
+                      {statusPieData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={STATUS_COLOR_MAP[entry.name] || "#999"}
+                        />
                       ))}
                     </Pie>
                     <Tooltip formatter={(value) => [`${value} bookings`, ""]} />
@@ -376,4 +399,3 @@ export default function AdminReports() {
     </div>
   );
 }
-
