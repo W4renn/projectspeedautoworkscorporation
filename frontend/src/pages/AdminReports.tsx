@@ -74,7 +74,6 @@ export default function AdminReports() {
   const [endDate, setEndDate] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [serviceTypeFilter, setServiceTypeFilter] = useState("all");
-  const [serviceTypes, setServiceTypes] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -124,18 +123,7 @@ export default function AdminReports() {
     }
   };
 
-  const fetchServiceTypes = async () => {
-    try {
-      const res = await axios.get(`${API}/services`);
-      const types = res.data.map((s: any) => s.title);
-      setServiceTypes(types);
-    } catch (err) {
-      console.error("Failed to load service types:", err);
-    }
-  };
-
   useEffect(() => {
-    fetchServiceTypes();
     fetchReportData();
   }, []);
 
@@ -224,17 +212,6 @@ export default function AdminReports() {
                   <option value="rejected">Rejected</option>
                 </select>
               </div>
-              {/* <div className="filter-group">
-                <label>Service Type:</label>
-                <select value={serviceTypeFilter} onChange={(e) => setServiceTypeFilter(e.target.value)}>
-                  <option value="all">All Services</option>
-                  {serviceTypes.map((type) => (
-                    <option key={type} value={type.toLowerCase()}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
               <div className="filter-actions">
                 <button type="submit" className="apply-filter-btn" disabled={loading}>
                   {loading ? 'Loading...' : 'Apply Filters'}
