@@ -800,23 +800,24 @@ export default function AdminDashboard() {
                           `https://mail.google.com/mail/?view=cm&fs=1&to=${apt.email}&su=${encodeURIComponent(
                             "Appointment Approved"
                           )}&body=${encodeURIComponent(
-                            `Dear ${apt.customerName},
+                            `Good Day! ${apt.customerName},
 
-                            We are pleased to inform you that your booking has been successfully approved.
+your booking has been APPROVED.
 
-                            Below are your booking details:
 
-                            Service Type: ${apt.serviceType}
-                            Date: ${apt.bookingDate}
-                            Time: ${apt.bookingTime}
+We are pleased to inform you that your booking has been successfully confirmed.
 
-                            Please make sure to arrive on time for your scheduled appointment.
-                            If you have any concerns or need to make changes to your booking, feel free to contact us immediately.
+Car Model: ${apt.carModel}
+Service Type: ${apt.serviceType}
+Date/Time: ${apt.bookingDate} ${apt.bookingTime}
 
-                            We look forward to serving you.
+Please arrive on time for your scheduled appointment.
 
-                            Best regards,
-                            Project Speed Autoworks Corporation`
+We look forward to serving you. Thank you for choosing our service.
+
+
+Best Regards,
+Project Speed Autoworks Corporation`
                           )}`,
                           "_blank"
                         );
@@ -834,26 +835,27 @@ export default function AdminDashboard() {
                       `https://mail.google.com/mail/?view=cm&fs=1&to=${apt.email}&su=${encodeURIComponent(
                         "Appointment Rejected"
                       )}&body=${encodeURIComponent(
-                        `Dear ${apt.customerName},
+                        `Good day! ${apt.customerName},
 
-                        We regret to inform you that your booking request has been rejected.
+your booking has been REJECTED.
 
-                        Below are your booking details for reference:
 
-                        Service Type: ${apt.serviceType}
-                        Date: ${apt.bookingDate}
-                        Time: ${apt.bookingTime}
+We sincerely apologize for the inconvenience.
 
-                        Reason for Rejection:
-                        //type reason here if you want, or leave it general
+We regret to inform you that your requested booking
+could not be accommodated due to the unavailability
+of your preferred schedule or service at the moment.
 
-                        Please note that the decision was made based on our current schedule availability and operational considerations.
-                        We encourage you to book another available schedule at your convenience.
+Car Model: ${apt.carModel}
+Service Type: ${apt.serviceType}
+Date/Time: ${apt.bookingDate} ${apt.bookingTime}}
 
-                        If you have any questions or would like to rebook, feel free to contact us.
+We kindly encourage you to select another available schedule
+at your convenience. Thank you for your understanding.
+  
 
-                        Best regards,
-                        Project Speed Autoworks Corporation`
+Best regards,
+Project Speed Autoworks Corporation`
                       )}`,
                       "_blank"
                     );
