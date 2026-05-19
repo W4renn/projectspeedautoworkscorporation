@@ -1,16 +1,18 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { login as authLogin, register as authRegister, setAuthToken, clearAuthToken } from "../api/auth";
 
+type UserRole = "admin" | "staff" | "user";
+
 interface User {
   username: string;
-  role: "admin" | "user";
+  role: UserRole;
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (username: string, password: string) => Promise<User | null>;
-  register: (username: string, password: string, role: "admin" | "user") => Promise<true | string>;
+  register: (username: string, password: string, role: UserRole) => Promise<true | string>;
   logout: () => void;
 }
 
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const register = async (username: string, password: string, role: "admin" | "user") => {
+  const register = async (username: string, password: string, role: UserRole) => {
     setLoading(true);
     try {
       const { token, user: newUser } = await authRegister({ username, password, role });
@@ -71,7 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (decoded.exp && decoded.exp * 1000 < Date.now()) {
         return null;
       }
-      if (decoded.username && decoded.role && (decoded.role === 'admin' || decoded.role === 'user')) {
+      if (decoded.username && decoded.role && (decoded.role === 'admin' || decoded.role === 'staff' || decoded.role === 'user')) {
         return {
           username: decoded.username,
           role: decoded.role,
