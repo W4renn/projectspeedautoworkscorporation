@@ -5,11 +5,13 @@ interface LoginCredentials {
   password: string;
 }
 
+type UserRole = 'admin' | 'staff' | 'user';
+
 interface LoginResponse {
   token: string;
   user: {
     username: string;
-    role: 'admin' | 'user';
+    role: UserRole;
   };
 }
 
@@ -31,7 +33,7 @@ export const clearAuthToken = () => {
 export interface RegisterCredentials {
   username: string;
   password: string;
-  role: 'admin' | 'user';
+  role: UserRole;
 }
 
 export type RegisterResponse = LoginResponse;
