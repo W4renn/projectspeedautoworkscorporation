@@ -18,7 +18,7 @@ import {
 } from "recharts";
 import { Link } from "react-router-dom";
 import "./AdminReports.css";
-
+s
 interface Appointment {
   id: string;
   customerName?: string;
