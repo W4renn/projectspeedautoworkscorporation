@@ -65,6 +65,7 @@ interface Product {
 
 export default function AdminDashboard() {
   const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
   
   const [pendingAppointments, setPendingAppointments] = useState<Appointment[]>([]);
   const [approvedAppointments, setApprovedAppointments] = useState<Appointment[]>([]);
@@ -169,21 +170,26 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchAllData();
-    fetchAnnouncements();
-    fetchTestimonials();
-    fetchProducts();
-    fetchServices();
-    fetchMechanics();
-    const interval = setInterval(() => {
-      fetchAllData();
+    if (isAdmin) {
       fetchAnnouncements();
       fetchTestimonials();
       fetchProducts();
       fetchServices();
       fetchMechanics();
+    }
+
+    const interval = setInterval(() => {
+      fetchAllData();
+      if (isAdmin) {
+        fetchAnnouncements();
+        fetchTestimonials();
+        fetchProducts();
+        fetchServices();
+        fetchMechanics();
+      }
     }, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isAdmin]);
 
   const fetchAllData = async () => {
     try {
@@ -1129,9 +1135,20 @@ Project Speed Autoworks Corporation`
           )}
         </div>
 
-        {/* Announcements Management Section */}
-        <div className="appointments-section">
-          <h3>Manage Announcements ({announcements.length})</h3>
+        {!isAdmin && (
+          <div className="appointments-section">
+            <h3>Staff Overview</h3>
+            <p className="no-appointments">
+              You do not have permission to view or edit management content. Contact an administrator for access.
+            </p>
+          </div>
+        )}
+
+        {isAdmin && (
+          <>
+            {/* Announcements Management Section */}
+            <div className="appointments-section">
+              <h3>Manage Announcements ({announcements.length})</h3>
           
           {/* Add New Announcement Form */}
           <form onSubmit={handleSaveAnnouncement} className="announcement-form">
@@ -1839,6 +1856,7 @@ Project Speed Autoworks Corporation`
             </form>
           )}
         </div>
+      </>)}
       </div>
     </div>
   );
