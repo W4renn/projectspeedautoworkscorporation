@@ -46,7 +46,17 @@ export default function Login() {
           <button type="submit" className="add-btn">
             Login
           </button>
-{error && <p className="login-error">{error}</p>}
+
+          <p className="forgot-password-link">
+            <a
+              href="mailto:dwiwoiii2003@gmail.com?subject=Password Reset Request&body=Hello,%0D%0A%0D%0AI forgot my password and would like to request a reset.%0D%0A%0D%0AThank you."
+            >
+              Forgot Password?
+            </a>
+          </p>
+
+          {error && <p className="login-error">{error}</p>}
+
           <p className="signup-link">
             No account? <a href="/signup">Signup here</a>
           </p>
