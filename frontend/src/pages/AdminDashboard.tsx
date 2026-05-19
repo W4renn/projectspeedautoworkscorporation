@@ -2,14 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import { getServices, createService, updateService, deleteService } from "../api/services";
 import type { Service } from "../api/services";
 import { getMechanics, createMechanic, updateMechanic, deleteMechanic } from "../api/mechanics";
@@ -77,9 +69,7 @@ export default function AdminDashboard() {
   const [pendingAppointments, setPendingAppointments] = useState<Appointment[]>([]);
   const [approvedAppointments, setApprovedAppointments] = useState<Appointment[]>([]);
   const [rejectedAppointments, setRejectedAppointments] = useState<Appointment[]>([]);
-  const [historyAppointments, setHistoryAppointments] = useState<Appointment[]>([]);
   const [stats, setStats] = useState<Stats>({ total: 0, pending: 0, approved: 0, rejected: 0 });
-  const [notificationCount, setNotificationCount] = useState(0);
   
   // Announcements state
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -159,13 +149,13 @@ export default function AdminDashboard() {
 
   const visibleApprovedAppointments = showAllApproved
     ? approvedAppointments
-    : approvedAppointments.slice(0, 5);
+    : approvedAppointments.slice(0, 1);
 
   const [showAllRejected, setShowAllRejected] = useState(false);
 
   const visibleRejectedAppointments = showAllRejected
     ? rejectedAppointments
-    : rejectedAppointments.slice(0, 5);
+    : rejectedAppointments.slice(0, 1);
 
   const [showAllTestimonials, setShowAllTestimonials] = useState(false);
 
@@ -198,20 +188,17 @@ export default function AdminDashboard() {
   const fetchAllData = async () => {
     try {
       setApiError(null);
-      const [pendingRes, approvedRes, rejectedRes, statsRes, historyRes] = await Promise.all([
+      const [pendingRes, approvedRes, rejectedRes, statsRes ] = await Promise.all([
         axios.get(`${API}/appointments/pending`),
         axios.get(`${API}/appointments/approved`),
         axios.get(`${API}/appointments/rejected`),
-        axios.get(`${API}/appointments/stats`),
-        axios.get(`${API}/appointments/history`)
+        axios.get(`${API}/appointments/stats`)
       ]);
       
       setPendingAppointments(pendingRes.data || []);
       setApprovedAppointments(approvedRes.data || []);
       setRejectedAppointments(rejectedRes.data || []);
       setStats(statsRes.data || { total: 0, pending: 0, approved: 0, rejected: 0 });
-      setHistoryAppointments(historyRes.data || []);
-      setNotificationCount((pendingRes.data || []).length);
     } catch (err: any) {
       console.error("Error fetching data:", err);
       setApiError(`Failed to load dashboard data: ${err.response?.data?.error || err.message || 'Unknown error. Check if backend server is running on port 5000.'}`);
@@ -698,27 +685,18 @@ export default function AdminDashboard() {
       {/* Admin Header with Menu Bar */}
       <div className="admin-menu-bar">
         <div className="admin-menu-left">
-          <h2>Admin Dashboard</h2>
+          <h2>Welcome, {user?.username}!</h2>
         </div>
         <div className="admin-menu-right">
           <Link to="/admin/reports" className="reports-link-btn">
             Reports
           </Link>
-          <div className="notification-badge">
-            <span>New Bookings</span>
-            {notificationCount > 0 && (
-              <span className="badge-count">{notificationCount}</span>
-            )}
-          </div>
-
         </div>
       </div>
 
       <div className="admin-content">
         {/* Header */}
-        <div className="admin-header">
-          <h1>Welcome, {user?.username}!</h1>
-        </div>
+        
 
         {apiError && (
           <div style={{backgroundColor: '#fee2e2', color: '#dc2626', padding: '1rem', borderRadius: '0.5rem', margin: '1rem 0', borderLeft: '4px solid #dc2626', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -732,13 +710,35 @@ export default function AdminDashboard() {
           </div>
         )}
 
+        {/* Summary Stats Section */}
+        <div className="appointments-section stats-section">
+          <h3>Booking Summary</h3>
+          <div className="stats-grid">
+            <div className="stats-card total">
+              <h4>Total Bookings</h4>
+              <span className="stats-number">{stats.total}</span>
+            </div>
+            <div className="stats-card pending">
+              <h4>Pending</h4>
+              <span className="stats-number">{stats.pending}</span>
+            </div>
+            <div className="stats-card approved">
+              <h4>Approved</h4>
+              <span className="stats-number">{stats.approved}</span>
+            </div>
+            <div className="stats-card rejected">
+              <h4>Rejected</h4>
+              <span className="stats-number">{stats.rejected}</span>
+            </div>
+          </div>
+        </div>
+
         {/* Pending Appointments Section */}
         <div className="appointments-section">
         <div className="appointments-header">
           <h3>
             New Booking Requests ({pendingAppointments.length})
           </h3>
-
           {pendingAppointments.length > 5 && (
             <button
               className="toggle-appointments-btn"
@@ -807,230 +807,141 @@ export default function AdminDashboard() {
         )}
       </div>
 
-        {/* Summary Stats Section */}
-        <div className="appointments-section stats-section">
-          <h3>Booking Summary</h3>
-          <div className="stats-grid">
-            <div className="stats-card total">
-              <h4>Total Bookings</h4>
-              <span className="stats-number">{stats.total}</span>
-            </div>
-            <div className="stats-card pending">
-              <h4>Pending</h4>
-              <span className="stats-number">{stats.pending}</span>
-            </div>
-            <div className="stats-card approved">
-              <h4>Approved</h4>
-              <span className="stats-number">{stats.approved}</span>
-            </div>
-            <div className="stats-card rejected">
-              <h4>Rejected</h4>
-              <span className="stats-number">{stats.rejected}</span>
-            </div>
-          </div>
-          <div className="pie-chart-container">
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={[
-                    { name: "Pending", value: stats.pending },
-                    { name: "Approved", value: stats.approved },
-                    { name: "Rejected", value: stats.rejected },
-                  ]}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
-                  dataKey="value"
-                  label={({ name, percent }) =>
-                    `${name} ${percent !== undefined ? (percent * 100).toFixed(0) : 0}%`
-                  }
-                >
-                  <Cell fill="#555555" />
-                  <Cell fill="#28a745" />
-                  <Cell fill="#dc3545" />
-                </Pie>
-                <Tooltip
-                  formatter={(value) => [`${value} bookings`, ""]}
-                />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Rejected Appointments Section */}
-        <div className="appointments-section rejected-section">
-          <div className="appointments-header">
-            <h3>
-              Rejected Bookings ({rejectedAppointments.length})
-            </h3>
-
-            {rejectedAppointments.length > 5 && (
-              <button
-                className="toggle-appointments-btn"
-                onClick={() => setShowAllRejected(!showAllRejected)}
-              >
-                {showAllRejected ? "Collapse" : "Show All"}
-              </button>
-            )}
-          </div>
-
-          {rejectedAppointments.length === 0 ? (
-            <p className="no-appointments">No rejected bookings</p>
-          ) : (
-            <div className="appointments-grid">
-              {visibleRejectedAppointments.map((apt) => (
-                <div key={apt.id} className="appointment-card rejected">
-                  <div className="appointment-info">
-                    <h4>{customerNameFallback(apt)}</h4>
-
-                    <p>
-                      <strong>Car:</strong> {apt.carModel}
-                    </p>
-
-                    <p>
-                      <strong>Service:</strong> {apt.serviceType}
-                    </p>
-
-                    <p>
-                      <strong>Date:</strong> {apt.bookingDate} at{" "}
-                      {apt.bookingTime}
-                    </p>
-
-                    <p>
-                      <strong>Contact:</strong> {apt.contactNumber}
-                    </p>
-                    
-                    <p>
-                      <strong>Email:</strong> {apt.email}
-                    </p>
-
-                    {apt.description && (
-                      <p>
-                        <strong>Notes:</strong> {apt.description}
-                      </p>
-                    )}
-
-                    {apt.formattedUpdatedAt && (
-                      <p>
-                        <strong>Last Updated:</strong>{" "}
-                        {apt.formattedUpdatedAt}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="appointment-status">
-                    <span className="status-rejected">
-                      Rejected
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Approved Appointments Section */}
-        <div className="appointments-section approved-section">
+        {/* Rejected Appointments Table */}
+      <div className="appointments-section rejected-section">
         <div className="appointments-header">
           <h3>
-            Approved Bookings ({approvedAppointments.length})
+            Rejected Bookings ({rejectedAppointments.length})
           </h3>
-
-          {approvedAppointments.length > 5 && (
+          {rejectedAppointments.length > 5 && (
             <button
               className="toggle-appointments-btn"
-              onClick={() => setShowAllApproved(!showAllApproved)}
+              onClick={() => setShowAllRejected(!showAllRejected)}
             >
-              {showAllApproved ? "Collapse" : "Show All"}
+              {showAllRejected ? "Collapse" : "Show All"}
             </button>
           )}
         </div>
 
-        {approvedAppointments.length === 0 ? (
+        {rejectedAppointments.length === 0 ? (
           <p className="no-appointments">
-            No approved bookings yet
+            No rejected bookings
           </p>
         ) : (
-          <div className="appointments-grid">
-            {visibleApprovedAppointments.map((apt) => (
-              <div key={apt.id} className="appointment-card approved">
-                <div className="appointment-info">
-                  <h4>{customerNameFallback(apt)}</h4>
+          <div className="history-table-container">
+            <table className="history-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Car Model</th>
+                  <th>Service</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Contact</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
 
-                  <p>
-                    <strong>Car:</strong> {apt.carModel}
-                  </p>
+              <tbody>
+                {visibleRejectedAppointments.map((apt) => (
+                  <tr
+                    key={apt.id}
+                    className="status-rejected"
+                  >
+                    <td>{customerNameFallback(apt)}</td>
 
-                  <p>
-                    <strong>Service:</strong> {apt.serviceType}
-                  </p>
+                    <td>{apt.carModel}</td>
 
-                  <p>
-                    <strong>Date:</strong> {apt.bookingDate} at{" "}
-                    {apt.bookingTime}
-                  </p>
+                    <td>{apt.serviceType}</td>
 
-                  <p>
-                    <strong>Contact:</strong> {apt.contactNumber}
-                  </p>
+                    <td>{apt.bookingDate}</td>
 
-                  <p>
-                    <strong>Email:</strong> {apt.email}
-                  </p>
+                    <td>{apt.bookingTime}</td>
 
-                  {apt.formattedUpdatedAt && (
-                    <p>
-                      <strong>Confirmed:</strong>{" "}
-                      {apt.formattedUpdatedAt}
-                    </p>
-                  )}
-                </div>
+                    <td>{apt.contactNumber}</td>
 
-                <div className="appointment-status">
-                  <span className="status-approved">
-                    Approved
-                  </span>
-                </div>
-              </div>
-            ))}
+                    <td>{apt.email}</td>
+
+                    <td>
+                      <span className="status-badge rejected">
+                        Rejected
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
-        {/* History Section */}
-        <div className="appointments-section history-section">
-          <h3>Bookings History ({historyAppointments.length})</h3>
-          {historyAppointments.length === 0 ? (
-            <p className="no-appointments">No bookings history</p>
+
+        {/* Approved Appointments Table */}
+        <div className="appointments-section approved-section">
+          <div className="appointments-header">
+            <h3>
+              Approved Bookings ({approvedAppointments.length})
+            </h3>
+
+            {approvedAppointments.length > 5 && (
+              <button
+                className="toggle-appointments-btn approved-btn"
+                onClick={() => setShowAllApproved(!showAllApproved)}
+              >
+                {showAllApproved ? "Collapse" : "Show All"}
+              </button>
+            )}
+          </div>
+
+          {approvedAppointments.length === 0 ? (
+            <p className="no-appointments">
+              No approved bookings yet
+            </p>
           ) : (
             <div className="history-table-container">
-              <table className="history-table">
+              <table className="history-table approved-table">
                 <thead>
                   <tr>
                     <th>Customer</th>
+                    <th>Car Model</th>
                     <th>Service</th>
-                    <th>Date/Time</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Contact</th>
+                    <th>Email</th>
                     <th>Status</th>
-                    <th>Last Updated</th>
                   </tr>
                 </thead>
+
                 <tbody>
-                  {historyAppointments.slice(0, 10).map((apt) => (
-                    <tr key={apt.id} className={`status-${apt.status}`}>
+                  {visibleApprovedAppointments.map((apt) => (
+                    <tr
+                      key={apt.id}
+                      className="status-approved"
+                    >
                       <td>{customerNameFallback(apt)}</td>
+
+                      <td>{apt.carModel}</td>
+
                       <td>{apt.serviceType}</td>
-                      <td>{apt.bookingDate} {apt.bookingTime}</td>
-                      <td>{apt.status.charAt(0).toUpperCase() + apt.status.slice(1)}</td>
-                      <td>{apt.formattedUpdatedAt || apt.formattedCreatedAt || 'N/A'}</td>
+
+                      <td>{apt.bookingDate}</td>
+
+                      <td>{apt.bookingTime}</td>
+
+                      <td>{apt.contactNumber}</td>
+
+                      <td>{apt.email}</td>
+
+                      <td>
+                        <span className="status-badge approved">
+                          Approved
+                        </span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {historyAppointments.length > 10 && (
-                <p className="history-footer">Showing 10 most recent of {historyAppointments.length} total bookings</p>
-              )}
             </div>
           )}
         </div>
@@ -1055,9 +966,6 @@ export default function AdminDashboard() {
                 className="announcement-select"
               >
                 <option value="info">Info</option>
-                <option value="success">Success</option>
-                <option value="warning">Warning</option>
-                <option value="error">Error</option>
               </select>
               <button type="submit" className="add-announcement-btn">
                 {editingAnnouncementId ? 'Update Announcement' : 'Add Announcement'}
