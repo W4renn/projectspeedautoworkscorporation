@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
       </div>
 
       <ul className="nav-links">
-        {user?.role === "admin" && (
+        {(user?.role === "admin" || user?.role === "staff") && (
           <li>
             <Link 
               to="/admin" 
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
       </ul>
 
       <div className="navbar-right">
-        {user?.role !== "admin" && (
+        {(!user || user.role === "user") && (
           <Link to="/appointment" className="nav-btn">
             Book Appointment
           </Link>
@@ -128,7 +128,7 @@ const App: React.FC = () => {
   <Route
     path="/admin"
     element={
-      <ProtectedRoute adminOnly={true}>
+      <ProtectedRoute allowedRoles={["admin", "staff"]}>
         <AdminDashboard />
       </ProtectedRoute>
     }
@@ -136,7 +136,7 @@ const App: React.FC = () => {
   <Route
     path="/admin/reports"
     element={
-      <ProtectedRoute adminOnly={true}>
+      <ProtectedRoute allowedRoles={["admin", "staff"]}>
         <AdminReports />
       </ProtectedRoute>
     }
