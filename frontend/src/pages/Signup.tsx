@@ -57,8 +57,8 @@ export default function Signup() {
             className="role-select"
           >
         {/* <option value="user">Customer</option> */}
-            <option value="staff">Staff</option>
             <option value="admin">Admin</option>
+            <option value="staff">Staff</option>
           </select>
           <button type="submit" className="signup-btn" disabled={loading}>
             {loading ? "Creating..." : "Sign Up"}
