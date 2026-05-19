@@ -1,3 +1,10 @@
+.admin-header h1 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: -20px;
+  font-weight: 700;
+}
 
 .admin-reports .admin-menu-right {
   display: flex;
