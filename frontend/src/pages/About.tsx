@@ -109,9 +109,8 @@ const About: React.FC = () => {
                             e.currentTarget.alt = 'Image not available';
                           }}
                         />
-              <p>{mechanic.name}</p>
+              <p className="technician-role">{mechanic.role} {mechanic.name}</p>
               <p className="technician-desc">{mechanic.desc}</p>
-              <p className="technician-role">{mechanic.role}</p>
             </div>
           ))}
         </div>
