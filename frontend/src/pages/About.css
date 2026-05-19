@@ -300,20 +300,8 @@
   position: relative;
 }
 
-.technician-card p::before {
-  content: '━';
-  margin-right: 10px;
-  color: #0243a1;
-}
-
-.technician-card p::after {
-  content: '━';
-  margin-left: 10px;
-  color: #0243a1;
-}
-
 .technician-role {
-  color: #0243a1 !important;
+  color: #ff3300 !important;
   font-weight: 600;
   font-size: 1rem;
   margin-top: 0.25rem;
