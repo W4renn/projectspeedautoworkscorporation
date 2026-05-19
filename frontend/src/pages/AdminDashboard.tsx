@@ -7,7 +7,7 @@ import type { Service } from "../api/services";
 import { getMechanics, createMechanic, updateMechanic, deleteMechanic } from "../api/mechanics";
 import type { Mechanic } from "../api/mechanics";
 import "./AdminDashboard.css";
-
+s
 const BASE_IMAGE_URL = 'https://projectspeedautoworkscorporation-backend.onrender.com';
 const API = import.meta.env.VITE_API_URL;
 
