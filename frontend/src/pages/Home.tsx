@@ -6,7 +6,7 @@ import "./Home.css";
 
 const Home: React.FC = () => {
   const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
+  const isInternal = user?.role === "admin" || user?.role === "staff";
 
   return (
     <div className="home-page">
@@ -19,12 +19,12 @@ const Home: React.FC = () => {
           <p className="desc">
             Your one stop automotive shop in Sorsogon City
           </p>
-          {isAdmin ? (
+          {isInternal ? (
             <button className="cta-btn disabled" disabled>
               Book an Appointment
             </button>
           ) : (
-            <Link to="/BookAppointment.tsx"> 
+            <Link to="/appointment"> 
               <button className="cta-btn">
                 Book an Appointment
               </button>
