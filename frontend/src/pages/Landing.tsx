@@ -36,7 +36,7 @@ const API = import.meta.env.VITE_API_URL;
 
 const Landing: React.FC = () => {
   const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
+  const isInternal = user?.role === "admin" || user?.role === "staff";
   const [loading, setLoading] = useState(true);
 
   const [latestAnnouncement, setLatestAnnouncement] = useState<Announcement | null>(null);
@@ -57,7 +57,7 @@ const Landing: React.FC = () => {
         // show only once per browser tab session
         const alreadyShown = sessionStorage.getItem("announcementShown");
 
-        if (!alreadyShown && !isAdmin) {
+        if (!alreadyShown && !isInternal) {
           setLatestAnnouncement(latest);
           setShowPopup(true);
 
@@ -129,7 +129,7 @@ const Landing: React.FC = () => {
   return (
     <div className="landing-page">
       {/* Announcement Popup */}
-      {showPopup && latestAnnouncement && !isAdmin && (
+      {showPopup && latestAnnouncement && !isInternal && (
         <div className="announcement-popup-overlay" onClick={handleClosePopup}>
           <div className="announcement-popup" onClick={(e) => e.stopPropagation()}>
             <button className="announcement-popup-close" onClick={handleClosePopup}>
@@ -169,7 +169,7 @@ const Landing: React.FC = () => {
               <div className="header-content">
                 <h1>Your Trusted Automotive Partner in Sorsogon City</h1>
                 <p className="desc">Professional • Reliable • Affordable</p>
-                {isAdmin ? (
+                {isInternal ? (
                   <button className="cta-btn disabled" disabled>
                     Book an Appointment
                   </button>
@@ -213,7 +213,7 @@ const Landing: React.FC = () => {
           <div className="image-box-overlay">
             <h2>Professional Auto Services</h2>
             <p>Expert technicians ready to handle all your vehicle needs</p>
-            {isAdmin ? (
+            {isInternal ? (
               <button className="image-box-btn disabled" disabled>
                 Book Now
               </button>
@@ -317,7 +317,7 @@ const Landing: React.FC = () => {
         <div className="cta-content">
           <h2>Ready to Get Your Vehicle Serviced?</h2>
           <p>Book an appointment today and experience the difference!</p>
-          {isAdmin ? (
+          {isInternal ? (
             <button className="cta-btn-large disabled" disabled>
               Schedule Now
             </button>
