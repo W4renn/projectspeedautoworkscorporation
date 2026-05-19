@@ -14,7 +14,7 @@ export default function Login() {
     e.preventDefault();
     const loggedUser = await auth.login(username, password);
     if (loggedUser) {
-      navigate(loggedUser.role === "admin" ? "/admin" : "/");
+      navigate(loggedUser.role === "admin" || loggedUser.role === "staff" ? "/admin" : "/");
     } else {
       setError("Invalid credentials");
     }
