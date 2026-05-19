@@ -5,7 +5,7 @@ type UserRole = "admin" | "staff" | "user";
 
 interface User {
   username: string;
-  role: UserRole;
+  role: UserRole1;
 }
 
 interface AuthContextType {
