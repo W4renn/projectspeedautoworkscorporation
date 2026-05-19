@@ -6,6 +6,7 @@ import "./About.css";
 interface Mechanic {
   _id?: string;
   name: string;
+  desc: string;
   role: string;
   imgURL?: string;
 }
@@ -109,6 +110,7 @@ const About: React.FC = () => {
                           }}
                         />
               <p>{mechanic.name}</p>
+              <p className="technician-desc">{mechanic.desc}</p>
               <p className="technician-role">{mechanic.role}</p>
             </div>
           ))}
