@@ -788,18 +788,75 @@ export default function AdminDashboard() {
 
                 <div className="appointment-actions">
                   <button
-                    className="approve-btn"
-                    onClick={() => handleApprove(apt.id)}
-                  >
-                    Approve
-                  </button>
+                      className="approve-btn"
+                      onClick={() => {
+                        window.open(
+                          `https://mail.google.com/mail/?view=cm&fs=1&to=${apt.email}&su=${encodeURIComponent(
+                            "Appointment Approved"
+                          )}&body=${encodeURIComponent(
+                            `Dear ${apt.customerName},
+
+                            We are pleased to inform you that your booking has been successfully approved.
+
+                            Below are your booking details:
+
+                            Service Type: ${apt.serviceType}
+                            Date: ${apt.bookingDate}
+                            Time: ${apt.bookingTime}
+
+                            Please make sure to arrive on time for your scheduled appointment.
+                            If you have any concerns or need to make changes to your booking, feel free to contact us immediately.
+
+                            We look forward to serving you.
+
+                            Best regards,
+                            Project Speed Autoworks Corporation`
+                          )}`,
+                          "_blank"
+                        );
+
+                        handleApprove(apt.id);
+                      }}
+                    >
+                      Approve
+                    </button>
 
                   <button
-                    className="reject-btn"
-                    onClick={() => handleReject(apt.id)}
-                  >
-                    Reject
-                  </button>
+                  className="reject-btn"
+                  onClick={() => {
+                    window.open(
+                      `https://mail.google.com/mail/?view=cm&fs=1&to=${apt.email}&su=${encodeURIComponent(
+                        "Appointment Rejected"
+                      )}&body=${encodeURIComponent(
+                        `Dear ${apt.customerName},
+
+                        We regret to inform you that your booking request has been rejected.
+
+                        Below are your booking details for reference:
+
+                        Service Type: ${apt.serviceType}
+                        Date: ${apt.bookingDate}
+                        Time: ${apt.bookingTime}
+
+                        Reason for Rejection:
+                        //type reason here if you want, or leave it general
+
+                        Please note that the decision was made based on our current schedule availability and operational considerations.
+                        We encourage you to book another available schedule at your convenience.
+
+                        If you have any questions or would like to rebook, feel free to contact us.
+
+                        Best regards,
+                        Project Speed Autoworks Corporation`
+                      )}`,
+                      "_blank"
+                    );
+
+                    handleReject(apt.id);
+                  }}
+                >
+                  Reject
+                </button>
                 </div>
               </div>
             ))}
@@ -859,9 +916,75 @@ export default function AdminDashboard() {
 
                     <td>{apt.bookingTime}</td>
 
-                    <td>{apt.contactNumber}</td>
+                    <td>
+                      <a
+                        href={`sms:${apt.contactNumber}?body=${encodeURIComponent(
+                          `Good day! ${apt.customerName},
 
-                    <td>{apt.email}</td>
+your booking has been REJECTED.
+
+
+We sincerely apologize for the inconvenience.
+
+We regret to inform you that your requested booking
+could not be accommodated due to the unavailability
+of your preferred schedule or service at the moment.
+
+Car Model: ${apt.carModel}
+Service Type: ${apt.serviceType}
+Date/Time: ${apt.bookingDate} ${apt.bookingTime}}
+
+We kindly encourage you to select another available schedule
+at your convenience. Thank you for your understanding.
+  
+
+Best regards,
+Project Speed Autoworks Corporation`
+                        )}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        {apt.contactNumber}
+                      </a>
+                    </td>
+
+                    <td>
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${apt.email}&su=${encodeURIComponent(
+                          "Appointment Inquiry"
+                        )}&body=${encodeURIComponent(
+                          `Good Day! ${apt.customerName},
+
+your booking has been REJECTED.
+
+
+We regret to inform you that your booking request has been rejected.
+
+Below are your booking details for reference:
+
+Car Model: ${apt.carModel}
+Service Type: ${apt.serviceType}
+Date: ${apt.bookingDate}
+Time: ${apt.bookingTime}
+
+Reason for Rejection:
+
+
+Please note that the decision was made based on our current schedule availability and operational considerations.
+We encourage you to book another available schedule at your convenience.
+
+If you have any questions or would like to rebook, feel free to contact us.
+
+
+Best regards,
+Project Speed Autoworks Corporation`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {apt.email}
+                      </a>
+                    </td>
 
                     <td>
                       <span className="status-badge rejected">
@@ -929,9 +1052,69 @@ export default function AdminDashboard() {
 
                       <td>{apt.bookingTime}</td>
 
-                      <td>{apt.contactNumber}</td>
+                      <td>
+                        <a
+                          href={`sms:${apt.contactNumber}?body=${encodeURIComponent(
+                            `Good Day! ${apt.customerName},
 
-                      <td>{apt.email}</td>
+your booking has been APPROVED.
+
+
+We are pleased to inform you that your booking has been successfully confirmed.
+
+Car Model: ${apt.carModel}
+Service Type: ${apt.serviceType}
+Date/Time: ${apt.bookingDate} ${apt.bookingTime}
+
+Please arrive on time for your scheduled appointment.
+
+We look forward to serving you. Thank you for choosing our service.
+
+
+Best Regards,
+Project Speed Autoworks Corporation`
+                          )}`}
+                          className="text-blue-600 hover:underline"
+                        >
+                          {apt.contactNumber}
+                        </a>
+                      </td>
+
+                      <td>
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${apt.email}&su=${encodeURIComponent(
+                          "Appointment Inquiry"
+                        )}&body=${encodeURIComponent(
+                          `Good Day! ${apt.customerName},
+
+your booking has been APPROVED.
+
+
+We are pleased to inform you that your booking has been successfully approved.
+
+Below are your booking details:
+
+Car Model: ${apt.carModel}
+Service Type: ${apt.serviceType}
+Date: ${apt.bookingDate}
+Time: ${apt.bookingTime}
+
+Please make sure to arrive on time for your scheduled appointment.
+If you have any concerns or need to make changes to your booking, feel free to contact us immediately.
+
+We look forward to serving you.
+
+
+Best regards,
+Project Speed Autoworks Corporation`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {apt.email}
+                      </a>
+                    </td>
 
                       <td>
                         <span className="status-badge approved">
