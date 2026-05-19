@@ -45,7 +45,7 @@
 }
 
 .footer-section h3 {
-  color: var(--secondary-color);
+  color: #fff;
   font-size: 1.2rem;
   margin-bottom: 1rem;
   text-transform: uppercase;
@@ -55,7 +55,7 @@
 }
 
 .footer-section h4 {
-  color: var(--secondary-color);
+  color: #fff;
   font-size: 1rem;
   margin-top: 1rem;
   margin-bottom: 0.8rem;
@@ -70,7 +70,7 @@
 }
 
 .footer a {
-  color: var(--secondary-color);
+  color: #fff;
   text-decoration: none;
   transition: all 0.3s ease;
   font-weight: 500;
