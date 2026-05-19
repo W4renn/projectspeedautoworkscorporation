@@ -22,7 +22,7 @@ import {
 } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si"; 
 import "./Landing.css";
-
+s
 interface Announcement {
   id: string;
   message: string;
