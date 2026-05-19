@@ -140,9 +140,9 @@ export default function AdminReports() {
     setTimeout(() => fetchReportData(), 0);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
+  {/* <button className="print-btn" onClick={handlePrint}>
+            Print Report
+          </button> */}
 
   const statusPieData = [
     { name: "Pending", value: stats.pending },
@@ -155,23 +155,21 @@ export default function AdminReports() {
       {/* Admin Header with Menu Bar */}
       <div className="admin-menu-bar">
         <div className="admin-menu-left">
-          <h2>Admin Reports</h2>
+          <div className="admin-header">
+          <h1>Booking Reports</h1>
+        </div>
         </div>
         <div className="admin-menu-right">
           <Link to="/admin" className="back-to-dashboard-btn">
             Back to Dashboard
           </Link>
-          <button className="print-btn" onClick={handlePrint}>
+          {/* <button className="print-btn" onClick={handlePrint}>
             Print Report
-          </button>
+          </button> */}
         </div>
       </div>
 
       <div className="admin-content">
-        <div className="admin-header">
-          <h1>Booking Reports</h1>
-          <p>Generate and filter detailed booking reports</p>
-        </div>
 
         {error && (
           <div className="error-banner">
