@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
 import "./Signup.css";
 
+type UserRole = "admin" | "staff" | "user";
+
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role] = useState<"admin" | "user">("admin");
+  const [role, setRole] = useState<UserRole>("user");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const auth = useAuth();
@@ -49,6 +51,15 @@ export default function Signup() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value as UserRole)}
+            className="role-select"
+          >
+            <option value="user">Customer</option>
+            <option value="staff">Staff</option>
+            <option value="admin">Admin</option>
+          </select>
           <button type="submit" className="signup-btn" disabled={loading}>
             {loading ? "Creating..." : "Sign Up"}
           </button>
