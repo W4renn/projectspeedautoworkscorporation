@@ -805,18 +805,22 @@ export default function AdminDashboard() {
 your booking has been APPROVED.
 
 
-We are pleased to inform you that your booking has been successfully confirmed.
+We are pleased to inform you that your booking has been successfully approved.
+
+Below are your booking details:
 
 Car Model: ${apt.carModel}
 Service Type: ${apt.serviceType}
-Date/Time: ${apt.bookingDate} ${apt.bookingTime}
+Date: ${apt.bookingDate}
+Time: ${apt.bookingTime}
 
-Please arrive on time for your scheduled appointment.
+Please make sure to arrive on time for your scheduled appointment.
+If you have any concerns or need to make changes to your booking, feel free to contact us immediately.
 
-We look forward to serving you. Thank you for choosing our service.
+We look forward to serving you.
 
 
-Best Regards,
+Best regards,
 Project Speed Autoworks Corporation`
                           )}`,
                           "_blank"
